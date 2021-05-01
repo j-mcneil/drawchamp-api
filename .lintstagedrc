@@ -1,0 +1,3 @@
+{
+  "**/!(.)*.{t,j}s": "eslint --fix --max-warnings=0"
+}
