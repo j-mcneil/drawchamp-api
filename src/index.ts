@@ -1,26 +1,22 @@
-import Hapi from "@hapi/hapi";
+import 'dotenv/config';
+import 'reflect-metadata';
+import { container, bindIoc } from './inversify.config';
+import { Server } from './server';
+import symbols from './symbols';
 
-const init = async () => {
-  const server = Hapi.server({
-    port: 3000,
-    host: "localhost",
-  });
-
-  server.route({
-    method: "GET",
-    path: "/",
-    handler: (/*request: Hapi.Request, h: Hapi.ResponseToolkit*/) => {
-      return "Hello World!";
-    },
-  });
+async function main() {
+  bindIoc();
+  const server = container.get<Server>(symbols.server);
 
   await server.start();
-  console.log("Server running on %s", server.info.uri);
-};
+}
 
-process.on("unhandledRejection", (err) => {
-  console.log(err);
-  process.exit(1);
-});
-
-init();
+main().then(
+  () => {
+    console.log('service started');
+  },
+  (err) => {
+    console.error(err);
+    process.exit(1);
+  }
+);
