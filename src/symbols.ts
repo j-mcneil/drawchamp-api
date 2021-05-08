@@ -6,6 +6,9 @@ const symbols = {
     gameRepository: Symbol.for('GameRepository'),
     playerRepository: Symbol.for('PlayerRepository'),
   },
+  domain: {
+    gameService: Symbol.for('GameService'),
+  },
   utilities: {
     codeGenerator: Symbol.for('CodeGenerator'),
   },

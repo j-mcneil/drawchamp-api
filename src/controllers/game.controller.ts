@@ -2,7 +2,7 @@ import Hapi from '@hapi/hapi';
 import { inject, injectable } from 'inversify';
 import { firstValueFrom } from 'rxjs';
 
-import { IGameRepository, IPlayerRepository } from '../ports';
+import { IGameService } from '../domain/game-service';
 import symbols from '../symbols';
 import { handleErrorBoom } from '../utils/error';
 import { Controller } from './controller.interface';
@@ -18,7 +18,7 @@ export class GameController extends Controller {
         description: 'Create a new game',
       },
       handler: (request: Hapi.Request /*, h: Hapi.ResponseToolkit*/) => {
-        return firstValueFrom(this.gameRepository.create().pipe(handleErrorBoom(request)));
+        return firstValueFrom(this.gameService.createGame().pipe(handleErrorBoom(request)));
       },
     },
     {
@@ -29,16 +29,13 @@ export class GameController extends Controller {
       },
       handler: (request: Hapi.Request /*, h: Hapi.ResponseToolkit*/) => {
         return firstValueFrom(
-          this.playerRepository.create(request.params.name, request.params.code).pipe(handleErrorBoom(request))
+          this.gameService.createPlayer(request.params.name, request.params.code).pipe(handleErrorBoom(request))
         );
       },
     },
   ];
 
-  constructor(
-    @inject(symbols.ports.gameRepository) private gameRepository: IGameRepository,
-    @inject(symbols.ports.playerRepository) private playerRepository: IPlayerRepository
-  ) {
+  constructor(@inject(symbols.domain.gameService) private gameService: IGameService) {
     super();
   }
 }

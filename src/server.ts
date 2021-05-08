@@ -1,4 +1,5 @@
 import Glue from '@hapi/glue';
+import Hapi from '@hapi/hapi';
 import { inject, injectable } from 'inversify';
 
 import { GameController } from './controllers';
@@ -24,12 +25,19 @@ export class Server {
     relativeTo: __dirname,
   };
 
+  private server!: Hapi.Server;
+
   constructor(@inject(symbols.controllers.gameController) private gameController: GameController) {}
+
+  async init() {
+    this.server = await Glue.compose(this.manifest, this.options);
+    await this.server.initialize();
+    return this.server;
+  }
 
   async start() {
     try {
-      const server = await Glue.compose(this.manifest, this.options);
-      await server.start();
+      await this.server.start();
     } catch (err) {
       console.error(err);
       process.exit(1);
