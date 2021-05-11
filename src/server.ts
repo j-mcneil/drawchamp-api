@@ -10,7 +10,10 @@ export class Server {
     server: {
       port: 3000,
       host: 'localhost',
-      debug: (process.env.NODE_ENV || 'development') === 'development' ? { request: ['error'] } : undefined,
+      debug:
+        (process.env.NODE_ENV || 'development') === 'development'
+          ? { request: ['error'] }
+          : /* istanbul ignore next */ undefined,
     },
     register: {
       plugins: [
@@ -29,8 +32,22 @@ export class Server {
 
   constructor(@inject(symbols.controllers.gameController) private gameController: GameController) {}
 
-  async init() {
-    this.server = await Glue.compose(this.manifest, this.options);
+  /* istanbul ignore next */
+  private async compose(overrideHideDebugLog = false) {
+    return await Glue.compose(
+      {
+        ...this.manifest,
+        server: {
+          ...this.manifest.server,
+          debug: overrideHideDebugLog ? false : this.manifest.server.debug,
+        },
+      },
+      this.options
+    );
+  }
+
+  async init(overrideHideDebugLog = false) {
+    this.server = await this.compose(overrideHideDebugLog);
     await this.server.initialize();
     return this.server;
   }
