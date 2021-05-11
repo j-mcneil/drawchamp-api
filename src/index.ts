@@ -8,6 +8,7 @@ async function main() {
   bindIoc();
   const server = container.get<Server>(symbols.server);
 
+  await server.init();
   await server.start();
 }
 
