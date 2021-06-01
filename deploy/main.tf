@@ -71,8 +71,8 @@ resource "aws_security_group" "ecs_tasks" {
 
   ingress {
     protocol        = "tcp"
-    from_port       = 4000
-    to_port         = 4000
+    from_port       = 3000
+    to_port         = 3000
     cidr_blocks     = ["0.0.0.0/0"]
     security_groups = [aws_security_group.lb.id]
   }
@@ -229,7 +229,7 @@ resource "aws_ecs_service" "staging" {
   load_balancer {
     target_group_arn = aws_lb_target_group.staging.arn
     container_name   = "drawchamp-api"
-    container_port   = 4000
+    container_port   = 3000
   }
 
   depends_on = [aws_lb_listener.https_forward, aws_iam_role_policy_attachment.ecs_task_execution_role]
