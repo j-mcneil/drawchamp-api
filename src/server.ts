@@ -9,7 +9,7 @@ export class Server {
   private readonly manifest: Glue.Manifest = {
     server: {
       port: 3000,
-      host: 'localhost',
+      host: '0.0.0.0',
       debug:
         (process.env.NODE_ENV || 'development') === 'development'
           ? { request: ['error'] }
