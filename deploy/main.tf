@@ -195,7 +195,7 @@ data "template_file" "drawchamp-api" {
   vars = {
     aws_ecr_repository = aws_ecr_repository.repo.repository_url
     tag                = "latest"
-    app_port           = 80
+    app_port           = 3000
   }
 }
 
