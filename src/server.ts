@@ -18,7 +18,7 @@ export class Server {
     register: {
       plugins: [
         {
-          plugin: this.gameController.getPlugin(),
+          // plugin: this.gameController.getPlugin(),
         },
       ],
     },
