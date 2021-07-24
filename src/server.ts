@@ -15,13 +15,13 @@ export class Server {
           ? { request: ['error'] }
           : /* istanbul ignore next */ undefined,
     },
-    register: {
+    /*register: {
       plugins: [
         {
           // plugin: this.gameController.getPlugin(),
         },
       ],
-    },
+    },*/
   };
 
   private readonly options = {
