@@ -18,6 +18,8 @@ main().then(
     console.log('service started');
   },
   (err) => {
+    console.log('an error');
+    console.log(err);
     console.error(err);
     process.exit(1);
   }
