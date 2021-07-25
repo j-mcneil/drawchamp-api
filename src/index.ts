@@ -5,11 +5,12 @@ import { Server } from './server';
 import symbols from './symbols';
 
 async function main() {
+  console.log('pre bind ioc');
   bindIoc();
   const server = container.get<Server>(symbols.server);
-
-  await server.init();
-  await server.start();
+  console.log('no init');
+  //await server.init();
+  //await server.start();
 }
 
 main().then(
