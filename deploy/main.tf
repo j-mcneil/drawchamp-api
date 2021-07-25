@@ -196,7 +196,6 @@ data "aws_iam_policy_document" "ecs_task_role" {
     sid     = ""
     effect  = "Allow"
     actions = ["dynamodb:*"]
-    resources = ["*"]
     
     principals {
       type        = "Service"
