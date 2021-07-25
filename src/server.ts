@@ -47,17 +47,17 @@ export class Server {
   }
 
   async init(overrideHideDebugLog = false) {
-    this.server = await this.compose(overrideHideDebugLog);
+    /*this.server = await this.compose(overrideHideDebugLog);
     await this.server.initialize();
-    return this.server;
+    return this.server;*/
   }
 
   async start() {
-    try {
+    /*try {
       // await this.server.start();
     } catch (err) {
       console.error(err);
       process.exit(1);
-    }
+    }*/
   }
 }
