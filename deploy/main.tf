@@ -190,6 +190,26 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+data "aws_iam_policy_document" "ecs_task_role" {
+  version = "2012-10-17"
+  statement {
+    sid     = ""
+    effect  = "Allow"
+    actions = ["dynamodb:*"]
+    resource = "*"
+    
+    principals {
+      type        = "Service"
+      identifiers = ["ecs-tasks.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role" "ecs_role" {
+  name               = "ecs-staging-task-role"
+  assume_role_policy = data.aws_iam_policy_document.ecs_task_role.json
+}
+
 data "template_file" "drawchamp-api" {
   template = file("./drawchamp-api.json.tpl")
   vars = {
@@ -203,6 +223,7 @@ resource "aws_ecs_task_definition" "service" {
   family                   = "drawchamp-api-staging"
   network_mode             = "awsvpc"
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  task_role_arn            = aws_iam_role.ecs_task_role.arn
   cpu                      = 256
   memory                   = 2048
   requires_compatibilities = ["FARGATE"]
