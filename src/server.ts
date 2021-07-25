@@ -56,6 +56,8 @@ export class Server {
     try {
       await this.server.start();
     } catch (err) {
+      console.log('an error');
+      console.log(err);
       console.error(err);
       process.exit(1);
     }
