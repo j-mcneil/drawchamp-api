@@ -10,10 +10,10 @@ export class Server {
     server: {
       port: 3000,
       host: 'localhost',
-      debug:
-        (process.env.NODE_ENV || 'development') === 'development'
-          ? { request: ['error'] }
-          : /* istanbul ignore next */ undefined,
+      debug: { request: ['*'] }
+        //(process.env.NODE_ENV || 'development') === 'development'
+         // ? { request: ['error'] }
+        //  : /* istanbul ignore next */ undefined,
     },
     /*register: {
       plugins: [
