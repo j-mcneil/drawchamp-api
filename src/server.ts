@@ -10,18 +10,18 @@ export class Server {
     server: {
       port: 3000,
       host: 'localhost',
-      debug: { request: ['*'] }
-        //(process.env.NODE_ENV || 'development') === 'development'
-         // ? { request: ['error'] }
-        //  : /* istanbul ignore next */ undefined,
+      debug:
+        (process.env.NODE_ENV || 'development') === 'development'
+          ? { request: ['error'] }
+          : /* istanbul ignore next */ undefined,
     },
-    /*register: {
+    register: {
       plugins: [
         {
-          // plugin: this.gameController.getPlugin(),
+          plugin: this.gameController.getPlugin(),
         },
       ],
-    },*/
+    },
   };
 
   private readonly options = {
@@ -54,7 +54,7 @@ export class Server {
 
   async start() {
     try {
-      await this.server.start();
+      // await this.server.start();
     } catch (err) {
       console.error(err);
       process.exit(1);
