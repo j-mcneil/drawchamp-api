@@ -5,7 +5,8 @@ import { Server } from './server';
 import symbols from './symbols';
 
 async function main() {
-  console.log('pre bind ioc');
+  console.log(process.env);
+  console.log(process.env.AWS_REGION);
   //bindIoc();
   //const server = container.get<Server>(symbols.server);
   console.log('no init');
