@@ -121,7 +121,7 @@ resource "aws_lb_target_group" "staging" {
     protocol            = "HTTP"
     matcher             = "200-299"
     timeout             = "20"
-    path                = "/"
+    path                = "/meta/health-check"
     unhealthy_threshold = "2"
   }
 }
