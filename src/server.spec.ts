@@ -4,18 +4,20 @@ import { describe, it } from 'mocha';
 import { fake, stub, replace, SinonSpy } from 'sinon';
 import { StubbedInstance, stubConstructor, stubInterface } from 'ts-sinon';
 
-import { GameController } from './controllers';
+import { GameController, MetaController } from './controllers';
 import { IGameService } from './domain/game-service';
 import { Server } from './server';
 
 describe('Server', () => {
   let server: Server;
   let gameController: GameController;
+  let metaController: MetaController;
   let internalServer: StubbedInstance<Hapi.Server>;
 
   beforeEach(() => {
     gameController = new GameController(stubInterface<IGameService>());
-    server = new Server(gameController);
+    metaController = new MetaController();
+    server = new Server(gameController, metaController);
     internalServer = stubConstructor(Hapi.Server);
     stub(server as any, 'compose').returns(internalServer);
   });

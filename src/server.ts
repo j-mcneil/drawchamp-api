@@ -2,7 +2,7 @@ import Glue from '@hapi/glue';
 import Hapi from '@hapi/hapi';
 import { inject, injectable } from 'inversify';
 
-import { GameController } from './controllers';
+import { GameController, MetaController } from './controllers';
 import symbols from './symbols';
 @injectable()
 export class Server {
@@ -20,6 +20,9 @@ export class Server {
         {
           plugin: this.gameController.getPlugin(),
         },
+        {
+          plugin: this.metaController.getPlugin(),
+        },
       ],
     },
   };
@@ -30,7 +33,10 @@ export class Server {
 
   private server!: Hapi.Server;
 
-  constructor(@inject(symbols.controllers.gameController) private gameController: GameController) {}
+  constructor(
+    @inject(symbols.controllers.gameController) private gameController: GameController,
+    @inject(symbols.controllers.metaController) private metaController: MetaController
+  ) {}
 
   /* istanbul ignore next */
   private async compose(overrideHideDebugLog = false) {

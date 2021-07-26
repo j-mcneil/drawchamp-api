@@ -1,5 +1,6 @@
 const symbols = {
   controllers: {
+    metaController: Symbol.for('MetaController'),
     gameController: Symbol.for('GameController'),
   },
   ports: {
